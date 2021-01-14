@@ -1,29 +1,32 @@
-package com.ygort.bethehero.entities;
+package com.ygort.bethehero.dto;
 
-import javax.persistence.*;
+import com.ygort.bethehero.entities.Incident;
+import com.ygort.bethehero.entities.ONG;
 
-@Entity
-@Table(name = "tb_incident")
-public class Incident {
+import java.io.Serializable;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class IncidentDTO implements Serializable {
     private Long id;
     private String title;
     private String description;
     private Double value;
-
-    @ManyToOne
-    @JoinColumn(name = "ong_id")
     private ONG ong;
 
-    public Incident() {}
+    public IncidentDTO() {}
 
-    public Incident(Long id, String title, String description, Double value) {
+    public IncidentDTO(Long id, String title, String description, Double value) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.value = value;
+    }
+
+    public IncidentDTO(Incident entity) {
+        this.id = entity.getId();
+        this.title = entity.getTitle();
+        this.description = entity.getDescription();
+        this.value = entity.getValue();
+        this.ong = entity.getOng();
     }
 
     public Long getId() {
@@ -60,9 +63,5 @@ public class Incident {
 
     public ONG getOng() {
         return ong;
-    }
-
-    public void setOng(ONG ong) {
-        this.ong = ong;
     }
 }

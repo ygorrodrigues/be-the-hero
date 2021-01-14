@@ -1,16 +1,13 @@
-package com.ygort.bethehero.entities;
+package com.ygort.bethehero.dto;
 
-import javax.persistence.*;
+import com.ygort.bethehero.entities.ONG;
+
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "tb_ong")
-public class ONG implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ONGDTO implements Serializable {
     private Long id;
     private String name;
     private String email;
@@ -18,19 +15,28 @@ public class ONG implements Serializable {
     private String city;
     private String uf;
 
-    @OneToMany
-    @JoinColumn(name = "ong_id")
-    private Set<Incident> incidents = new HashSet<>();
+    private List<IncidentDTO> incidents = new ArrayList<>();
 
-    public ONG() {}
+    public ONGDTO() {}
 
-    public ONG(Long id, String name, String email, String whatsapp, String city, String uf) {
+    public ONGDTO(Long id, String name, String email, String whatsapp, String city, String uf) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.whatsapp = whatsapp;
         this.city = city;
         this.uf = uf;
+    }
+
+    public ONGDTO(ONG entity) {
+        id = entity.getId();
+        name = entity.getName();
+        email = entity.getEmail();
+        whatsapp = entity.getWhatsapp();
+        city = entity.getCity();
+        uf = entity.getUf();
+        incidents = entity.getIncidents().stream()
+            .map(x -> new IncidentDTO(x)).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -81,7 +87,7 @@ public class ONG implements Serializable {
         this.uf = uf;
     }
 
-    public Set<Incident> getIncidents() {
+    public List<IncidentDTO> getIncidents() {
         return incidents;
     }
 }

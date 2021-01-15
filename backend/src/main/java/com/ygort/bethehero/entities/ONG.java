@@ -1,5 +1,7 @@
 package com.ygort.bethehero.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -11,7 +13,8 @@ public class ONG implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
+
     private String name;
     private String email;
     private String whatsapp;
@@ -24,7 +27,7 @@ public class ONG implements Serializable {
 
     public ONG() {}
 
-    public ONG(Long id, String name, String email, String whatsapp, String city, String uf) {
+    public ONG(String id, String name, String email, String whatsapp, String city, String uf) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -33,11 +36,11 @@ public class ONG implements Serializable {
         this.uf = uf;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

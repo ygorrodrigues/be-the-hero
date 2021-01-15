@@ -1,1 +1,0 @@
-INSERT INTO tb_ong (name, email, whatsapp, city, uf) VALUES ('Carlinhos ONG', 'carlinhos@ong.com', '99899901', 'Santos', 'SP');

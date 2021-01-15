@@ -21,4 +21,12 @@ public class ONGService {
         List<ONG> list = repository.findAll();
         return list.stream().map(x -> new ONGDTO(x)).collect(Collectors.toList());
     }
+
+    @Transactional
+    public ONGDTO insert(ONGDTO dto) {
+        ONG ong = new ONG(null, dto.getName(), dto.getEmail(), dto.getWhatsapp(),
+                dto.getCity(), dto.getUf());
+        ong = repository.save(ong);
+        return new ONGDTO(ong);
+    }
 }

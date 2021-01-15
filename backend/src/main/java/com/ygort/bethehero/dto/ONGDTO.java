@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ONGDTO implements Serializable {
-    private Long id;
+    private String id;
     private String name;
     private String email;
     private String whatsapp;
@@ -19,7 +19,7 @@ public class ONGDTO implements Serializable {
 
     public ONGDTO() {}
 
-    public ONGDTO(Long id, String name, String email, String whatsapp, String city, String uf) {
+    public ONGDTO(String id, String name, String email, String whatsapp, String city, String uf) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -39,11 +39,11 @@ public class ONGDTO implements Serializable {
             .map(x -> new IncidentDTO(x)).collect(Collectors.toList());
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

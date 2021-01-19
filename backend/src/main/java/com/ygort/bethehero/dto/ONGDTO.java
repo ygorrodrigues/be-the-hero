@@ -1,5 +1,6 @@
 package com.ygort.bethehero.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ygort.bethehero.entities.ONG;
 
 import java.io.Serializable;
@@ -8,18 +9,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ONGDTO implements Serializable {
-    private String id;
+    private Long id;
     private String name;
     private String email;
     private String whatsapp;
     private String city;
     private String uf;
 
+//    @JsonIgnoreProperties("ong")
     private List<IncidentDTO> incidents = new ArrayList<>();
 
     public ONGDTO() {}
 
-    public ONGDTO(String id, String name, String email, String whatsapp, String city, String uf) {
+    public ONGDTO(Long id, String name, String email, String whatsapp, String city, String uf) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -39,11 +41,11 @@ public class ONGDTO implements Serializable {
             .map(x -> new IncidentDTO(x)).collect(Collectors.toList());
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

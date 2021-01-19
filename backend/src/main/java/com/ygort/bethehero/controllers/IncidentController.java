@@ -1,7 +1,7 @@
 package com.ygort.bethehero.controllers;
 
-import com.ygort.bethehero.dto.ONGDTO;
-import com.ygort.bethehero.services.ONGService;
+import com.ygort.bethehero.dto.IncidentDTO;
+import com.ygort.bethehero.services.IncidentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,23 +11,27 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/ongs")
-public class ONGController {
+@RequestMapping(value = "/incidents")
+public class IncidentController {
 
     @Autowired
-    private ONGService service;
+    private IncidentService service;
 
     @GetMapping
-    public ResponseEntity<List<ONGDTO>> findAll() {
-        List<ONGDTO> list = service.findAll();
+    public ResponseEntity<List<IncidentDTO>> findAll() {
+        List<IncidentDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @PostMapping
-    public ResponseEntity<ONGDTO> insert(@RequestBody ONGDTO dto) {
-        dto = service.insert(dto);
+    public ResponseEntity<IncidentDTO> insert(
+            @RequestBody IncidentDTO dto,
+            @RequestHeader(value = "Authorization") Long ongId
+    ) {
+        dto = service.insert(dto, ongId);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
 }

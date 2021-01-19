@@ -1,5 +1,7 @@
 package com.ygort.bethehero.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,7 +16,7 @@ public class Incident {
     private Double value;
 
     @ManyToOne
-    @JoinColumn(name = "ong_id")
+    @JoinColumn(name = "ong_id", nullable = false)
     private ONG ong;
 
     public Incident() {}

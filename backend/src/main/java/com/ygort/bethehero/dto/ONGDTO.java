@@ -16,7 +16,7 @@ public class ONGDTO implements Serializable {
     private String city;
     private String uf;
 
-//    @JsonIgnoreProperties("ong")
+    @JsonIgnoreProperties("ong")
     private List<IncidentDTO> incidents = new ArrayList<>();
 
     public ONGDTO() {}

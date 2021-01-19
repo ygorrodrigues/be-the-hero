@@ -6,6 +6,8 @@ import com.ygort.bethehero.entities.ONG;
 import com.ygort.bethehero.repositories.IncidentRepository;
 import com.ygort.bethehero.repositories.ONGRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +24,14 @@ public class IncidentService {
     private ONGRepository ongRepository;
 
     @Transactional(readOnly = true)
-    public List<IncidentDTO> findAll(){
-        List<Incident> incidents = repository.findAll();
+    public List<IncidentDTO> findAll(Pageable pageable) {
+        Page<Incident> incidents = repository.findAll(pageable);
         return incidents.stream().map(x -> new IncidentDTO(x)).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Long countIncidents() {
+        return repository.count();
     }
 
     @Transactional
@@ -34,5 +41,20 @@ public class IncidentService {
         incident.setOng(ong);
         incident = repository.save(incident);
         return new IncidentDTO(incident);
+    }
+
+    @Transactional
+    public boolean delete(Long incidentId, Long ongId) {
+        try {
+            Incident incident = repository.findById(incidentId).get();
+            if(incident.getOng().getId().equals(ongId)) {
+                repository.delete(incident);
+                return true;
+            }
+            else return false;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 }

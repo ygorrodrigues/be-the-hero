@@ -21,7 +21,7 @@ public class IncidentController {
 
     @GetMapping
     public ResponseEntity<List<IncidentDTO>> findAll(
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "5") int size
     ) {
         List<IncidentDTO> list = service.findAll(PageRequest.of(page-1, size));
